@@ -7,6 +7,7 @@ var Modelo = function() {
 
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
+  this.preguntaEliminada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -30,6 +31,16 @@ Modelo.prototype = {
     this.preguntas.push(nuevaPregunta);
     this.guardar();
     this.preguntaAgregada.notificar();
+  },
+
+  borrarPregunta: function(idPregunta) {
+    _.filter(this.preguntas, function(preg) { return !(preg.id==idPregunta); });
+    this.preguntaEliminada.notificar();
+    /*id++;
+    var nuevaPregunta = {'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas};
+    this.preguntas.push(nuevaPregunta);
+    this.guardar();
+    this.preguntaAgregada.notificar();*/
   },
 
   //se guardan las preguntas
