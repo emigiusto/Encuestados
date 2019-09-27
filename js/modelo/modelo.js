@@ -12,6 +12,14 @@ var Modelo = function() {
 Modelo.prototype = {
   //se obtiene el id más grande asignado a una pregunta
   obtenerUltimoId: function() {
+    if (this.preguntas.length>0) {
+      var newId = _.maxBy(this.preguntas, function(preg) { return preg.id; }).id;
+      this.ultimoId = newId;
+      return newId
+    } else {
+      return 0;
+    }
+    
   },
 
   //se agrega una pregunta dado un nombre y sus respuestas
@@ -28,3 +36,4 @@ Modelo.prototype = {
   guardar: function(){
   },
 };
+

@@ -18,14 +18,28 @@ VistaAdministrador.prototype = {
   //lista
   inicializar: function() {
     //llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
+    this.reconstruirLista();
+    this.configuracionDeBotones();
     validacionDeFormulario();
   },
 
   construirElementoPregunta: function(pregunta){
     var contexto = this;
     var nuevoItem;
-    //completar
+        //Pregunta de Prueba
+        /*var pregunta = {
+            'textoPregunta': "Mi primer Pregunta",
+            'id': 0, 
+            'cantidadPorRespuesta': [{'textoRespuesta': "mi unica respuesta", 'cantidad': 2}]
+          }
+        */
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
+    nuevoItem = $('<li/>', {
+      'html' : pregunta.textoPregunta,
+      'class' : 'list-group-item',
+      'id': pregunta.id
+    });
+    // Modificado! Guia 1
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
@@ -46,17 +60,19 @@ VistaAdministrador.prototype = {
   },
 
   configuracionDeBotones: function(){
-    var e = this.elementos;
-    var contexto = this;
-
+    var e = this.elementos; //Es el objeto que contiene a los elementos/botones del DOM
+    var contexto = this; //es la vistaAdministrador
     //asociacion de eventos a boton
     e.botonAgregarPregunta.click(function() {
       var value = e.pregunta.val();
       var respuestas = [];
-
       $('[name="option[]"]').each(function() {
-        //completar
+        //completado?
+        var respuesta = {'textoRespuesta': $(this).val(), 'cantidad': 0}
+        respuestas.push(respuesta);
       })
+      console.log(respuestas)
+
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
     });
