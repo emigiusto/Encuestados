@@ -54,32 +54,38 @@ Modelo.prototype = {
 
 
   editarPregunta: function(idPregunta,nuevoTexto,respuestasNuevas){
-    //respuestasNuevas es un array que contiene las nuevas respuestas
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
-    console.log(preguntaEditar);
-    //Cambio el texto de las preguntas
+    //Actualizo el texto de las Pregunta
     preguntaEditar.textoPregunta = nuevoTexto;
+
+    //respuestasNuevas es un array que contiene las nuevas respuestas
+
+      //Recorro las respuestas existentes, borrando las no existentes en el nuevo array
+      for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
+        var resp = preguntaEditar.cantidadPorRespuesta[index];
+        //si respuestas nuevas no lo incluye, hay que borrarlo
+        if (!(respuestasNuevas.include(resp.textoRespuesta))) {
+          preguntaEditar.cantidadPorRespuesta.splice(index, 1);
+        }
+      }
+
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
-    preguntaEditar.cantidadPorRespuesta = respuestas;
     this.preguntaAgregada.notificar();
   },
 
 
-  //Esta función llena el modal de editar por "default"
+  //Esta función llena el modal de editarPregunta por "default"
   llenarModal: function(idPregunta){
     //Limpio las respuestas existentes
     $('#containerRespuestas').empty();
-
     //Esta es la pregunta según el ID seleccionado como "active"
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
     //Este es el texto de la pregunta. Lo ingreso en el modal:
     var cuadroDePregunta = document.getElementById("pregunta-text");
     //Seteo por default el "value" del input del modal
     cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
-
     var respuestashtml = "";
-
     //Este ciclo recorrerá las respuestas creando el html correspondiente
     for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length-1; index++) {
       var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
