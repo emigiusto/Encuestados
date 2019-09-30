@@ -86,7 +86,7 @@ nav ul li a {
 	display: inline-block;
 	padding: 0 20px;
     color: #3A4043;
-    // font-weight: bold;
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -209,6 +209,9 @@ input.line-input {
 	padding: 0 0 6px 0;
 }
 
+.form-group input{
+	margin-top: 7px;
+}
 
 /*////////// RESPONSIVE ////////////*/
 

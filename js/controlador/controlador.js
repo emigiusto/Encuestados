@@ -19,7 +19,8 @@ Controlador.prototype = {
   },
 
   editarPregunta:function() {
-    this.modelo.editarPregunta(idPregunta,nuevoTexto,respuestas);
+    //respuestasNuevas es un array que contiene las nuevas respuestas
+    this.modelo.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
   },
 
   llenarModal:function(idPregunta) {

@@ -53,7 +53,8 @@ Modelo.prototype = {
   },
 
 
-  editarPregunta: function(idPregunta,nuevoTexto,respuestas){
+  editarPregunta: function(idPregunta,nuevoTexto,respuestasNuevas){
+    //respuestasNuevas es un array que contiene las nuevas respuestas
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
     console.log(preguntaEditar);
     //Cambio el texto de las preguntas
@@ -64,25 +65,30 @@ Modelo.prototype = {
     this.preguntaAgregada.notificar();
   },
 
+
   //Esta función llena el modal de editar por "default"
   llenarModal: function(idPregunta){
     //Limpio las respuestas existentes
-    $('#containerRespuestas').html = '';
+    $('#containerRespuestas').empty();
 
     //Esta es la pregunta según el ID seleccionado como "active"
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
     //Este es el texto de la pregunta. Lo ingreso en el modal:
-      $('#pregunta-text').html = preguntaEditar.textoPregunta;
+    var cuadroDePregunta = document.getElementById("pregunta-text");
+    //Seteo por default el "value" del input del modal
+    cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
 
     var respuestashtml = "";
 
     //Este ciclo recorrerá las respuestas creando el html correspondiente
-    preguntaEditar.cantidadPorRespuesta.forEach(function (preg, index) {
-      respuestashtml =+ this.prepararRespuestaModal(preg,index);
-    });
-
-    $('#containerRespuestas').html = respuestashtml;
+    for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length-1; index++) {
+      var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
+      respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index);
+    }
+    var containerResp = document.getElementById("containerRespuestas");
+    containerResp.innerHTML = respuestashtml;
   },
+
 
   //se guardan las preguntas
   guardar: function(){
@@ -106,7 +112,7 @@ Modelo.prototype = {
 
     //Devuelve el texto html a agregar al modal segun la cantidad de respuestas que haya
   prepararRespuestaModal: function(textoRespuesta,id){
-    return '<input type="text" class="form-control" id="responseNumber'+ id + '">' + textoRespuesta + '</input>';
+    return '<input type="text" class="form-control" value="'+textoRespuesta +'" id="responseNumber'+ id + '">';
   },
 
 };

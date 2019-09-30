@@ -82,15 +82,33 @@ VistaAdministrador.prototype = {
       contexto.controlador.borrarTodasLasPreguntas();
     });
 
+    //Cargo el modal al apretar EDITAR
     e.botonEditarPregunta.click(function() {
       //id pregunta a editar
-      var id = parseInt($('.list-group-item.active').attr('id'));
+      var id = parseInt($('.list-group-item.active').attr('id')) || 0;
+          if (id==0) {
+            return false;
+          }
       contexto.controlador.llenarModal(id);
       $('#editModal').modal('show');
     });
 
-    e.confirmarEditar.click(function() {
-      contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestas);
+
+    //Cargo edito la pregunta al tocar confirmar en MODAL
+    e.confirmarEdit.click(function() {
+      //respuestasNuevas es un array que contiene las nuevas respuestas
+      var idPregunta = parseInt($('.list-group-item.active').attr('id'));
+      var nuevoTexto = $('#pregunta-text').val();
+      var respuestasNuevas = [];
+
+        var cantidadDeRespuestas = $("#containerRespuestas input").length;
+        //Ciclo que llena las respuestas en el array
+        for (let index = 0; index < cantidadDeRespuestas; index++) {
+         var respuestaAPushear = $('#responseNumber'+index).val();
+         respuestasNuevas.push(respuestaAPushear);
+        };
+
+      contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
       $('#editModal').modal('hide');
     });
     
