@@ -28,15 +28,7 @@ VistaAdministrador.prototype = {
   },
 
   construirElementoPregunta: function(pregunta){
-    var contexto = this;
     var nuevoItem;
-        //Pregunta de Prueba
-        /*var pregunta = {
-            'textoPregunta': "Mi primer Pregunta",
-            'id': 0, 
-            'cantidadPorRespuesta': [{'textoRespuesta': "mi unica respuesta", 'cantidad': 2}]
-          }
-        */
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
     nuevoItem = $('<li/>', {
       'html' : pregunta.textoPregunta,
@@ -57,6 +49,7 @@ VistaAdministrador.prototype = {
   reconstruirLista: function() {
     var lista = this.elementos.lista;
     lista.html('');
+
     var preguntas = this.modelo.preguntas;
     for (var i=0;i<preguntas.length;++i){
       lista.append(this.construirElementoPregunta(preguntas[i]));
@@ -75,7 +68,6 @@ VistaAdministrador.prototype = {
         var respuesta = {'textoRespuesta': $(this).val(), 'cantidad': 0}
         respuestas.push(respuesta);
       })
-      console.log(respuestas)
 
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
@@ -83,9 +75,25 @@ VistaAdministrador.prototype = {
     //asociar el resto de los botones a eventos
     e.botonBorrarPregunta.click(function() {
       var id = parseInt($('.list-group-item.active').attr('id'));
-      console.log(id)
       contexto.controlador.borrarPregunta(id);
     });
+
+    e.borrarTodo.click(function() {
+      contexto.controlador.borrarTodasLasPreguntas();
+    });
+
+    e.botonEditarPregunta.click(function() {
+      //id pregunta a editar
+      var id = parseInt($('.list-group-item.active').attr('id'));
+      contexto.controlador.llenarModal(id);
+      $('#editModal').modal('show');
+    });
+
+    e.confirmarEditar.click(function() {
+      contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestas);
+      $('#editModal').modal('hide');
+    });
+    
   },
 
   limpiarFormulario: function(){
