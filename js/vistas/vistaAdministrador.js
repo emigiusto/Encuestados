@@ -36,6 +36,7 @@ VistaAdministrador.prototype = {
       'id': pregunta.id
     });
     // Modificado! Guia 1
+
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
@@ -107,11 +108,23 @@ VistaAdministrador.prototype = {
          var respuestaAPushear = $('#responseNumber'+index).val();
          respuestasNuevas.push(respuestaAPushear);
         };
-
       contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
       $('#editModal').modal('hide');
     });
     
+    //Agregar pregunta en MODAL
+    e.agregarRespModalButton.click(function(event) {
+      var idPregunta = ""; //DE DONDE SACO EL ID PREGUNTA??
+      var idRespuesta= $(event.target).parent().find("#containerRespuestas").children().length;
+      var newRowInput = '<div idPregunta="' + idPregunta + '"><input type="text" class="form-control" value="" idRespuesta ="' + idRespuesta +'" idPregunta="' + idPregunta + '"></input><img class="modalDelete" src="img/deleteButton.png" alt="No Image"></img></div>';
+      
+      $(event.target).parent().find("#containerRespuestas").append(newRowInput);
+
+            //Le asigno el evento de borrado
+            $("#containerRespuestas").find("img").click(function() {
+              $(this).parent().remove()
+            });
+    });
   },
 
   limpiarFormulario: function(){

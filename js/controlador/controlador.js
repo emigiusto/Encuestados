@@ -18,7 +18,7 @@ Controlador.prototype = {
     this.modelo.borrarPreguntasAll();
   },
 
-  editarPregunta:function() {
+  editarPregunta:function(idPregunta,nuevoTexto,respuestasNuevas) {
     //respuestasNuevas es un array que contiene las nuevas respuestas
     this.modelo.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
   },

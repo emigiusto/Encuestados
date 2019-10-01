@@ -209,8 +209,27 @@ input.line-input {
 	padding: 0 0 6px 0;
 }
 
+#pregunta-text{
+	width: 100%;
+}
+
 .form-group input{
+	width: 92%;
 	margin-top: 7px;
+	display: inline-block;
+}
+
+
+img.modalDelete{
+	margin-top: 7px;
+	width: 8%;
+	float:right;
+	height: 35px;;
+}
+
+#agregarPregModalButton{
+	margin:auto;
+	margin-bottom: 10px;
 }
 
 /*////////// RESPONSIVE ////////////*/

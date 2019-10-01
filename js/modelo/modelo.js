@@ -11,6 +11,7 @@ var Modelo = function() {
 };
 
 Modelo.prototype = {
+  
   //se obtiene el id más grande asignado a una pregunta
   obtenerUltimoId: function() {
     if (this.preguntas.length>0) {
@@ -55,19 +56,26 @@ Modelo.prototype = {
 
   editarPregunta: function(idPregunta,nuevoTexto,respuestasNuevas){
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
-    //Actualizo el texto de las Pregunta
+    //Actualizo el titulo de la Pregunta
     preguntaEditar.textoPregunta = nuevoTexto;
 
-    //respuestasNuevas es un array que contiene las nuevas respuestas
-
-      //Recorro las respuestas existentes, borrando las no existentes en el nuevo array
-      for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
-        var resp = preguntaEditar.cantidadPorRespuesta[index];
-        //si respuestas nuevas no lo incluye, hay que borrarlo
-        if (!(respuestasNuevas.include(resp.textoRespuesta))) {
-          preguntaEditar.cantidadPorRespuesta.splice(index, 1);
+    //Filtro el array viejo a travez de respuestasNuevas
+    var RespuestasAnterioresFiltradas = preguntaEditar.cantidadPorRespuesta.filter(function(resp) {
+      return respuestasNuevas.includes(resp.textoRespuesta);
+    });
+    
+      //respuestasNuevas es un array que contiene las nuevas respuestas
+      //Recorro las respuestas nuevas, agregando las no existentes en el array de respuestas existentes
+      for (let index = 0; index < respuestasNuevas.length; index++) {
+        var respNew = respuestasNuevas[index];
+        //si el array de respuestas no incluye a la nueva respuesta, hay que agregarla al final
+        if (!(RespuestasAnterioresFiltradas.some(respAnt => respAnt.textoRespuesta === respNew))){
+          //La agrego al final con cant 0
+          RespuestasAnterioresFiltradas.push({textoRespuesta: respNew, cantidad: 0});
         }
       }
+
+      preguntaEditar.cantidadPorRespuesta = RespuestasAnterioresFiltradas;
 
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
@@ -89,18 +97,21 @@ Modelo.prototype = {
     //Este ciclo recorrerá las respuestas creando el html correspondiente
     for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length-1; index++) {
       var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
-      respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index);
+      respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index,idPregunta);
     }
     var containerResp = document.getElementById("containerRespuestas");
     containerResp.innerHTML = respuestashtml;
+
+          //Asigno eventos a botones de autoborrado
+          $("#containerRespuestas").find("img").click(function() {
+            $(this).parent().remove()
+          });
   },
 
 
   //se guardan las preguntas
   guardar: function(){
   },
-
-
 
   //Otras funciones adicionales
     //Devuelve la pregunta correspondiente a ese id
@@ -117,9 +128,9 @@ Modelo.prototype = {
   },
 
     //Devuelve el texto html a agregar al modal segun la cantidad de respuestas que haya
-  prepararRespuestaModal: function(textoRespuesta,id){
-    return '<input type="text" class="form-control" value="'+textoRespuesta +'" id="responseNumber'+ id + '">';
-  },
+  prepararRespuestaModal: function(textoRespuesta,idRespuesta,idPregunta){
+    return '<div idPregunta="' + idPregunta + '"><input type="text" class="form-control" value="'+ textoRespuesta +'" idRespuesta ="' + idRespuesta +'" idPregunta="' + idPregunta + '"></input><img class="modalDelete" src="img/deleteButton.png" alt="No Image"></img></div>';
+id  }
 
 };
 
