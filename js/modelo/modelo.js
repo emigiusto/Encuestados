@@ -93,6 +93,7 @@ Modelo.prototype = {
     var cuadroDePregunta = document.getElementById("pregunta-text");
     //Seteo por default el "value" del input del modal
     cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
+    cuadroDePregunta.setAttribute("idPregunta", idPregunta);
     var respuestashtml = "";
     //Este ciclo recorrerá las respuestas creando el html correspondiente
     for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length-1; index++) {

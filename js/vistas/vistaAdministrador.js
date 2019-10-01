@@ -114,13 +114,17 @@ VistaAdministrador.prototype = {
     
     //Agregar pregunta en MODAL
     e.agregarRespModalButton.click(function(event) {
-      var idPregunta = ""; //DE DONDE SACO EL ID PREGUNTA??
+      var idPregunta = $(event.target).parent().find("#pregunta-text").attr("idpregunta");
+      console.log(idPregunta)
       var idRespuesta= $(event.target).parent().find("#containerRespuestas").children().length;
+      
+      //Preparo la linea de DIV + INPUT
       var newRowInput = '<div idPregunta="' + idPregunta + '"><input type="text" class="form-control" value="" idRespuesta ="' + idRespuesta +'" idPregunta="' + idPregunta + '"></input><img class="modalDelete" src="img/deleteButton.png" alt="No Image"></img></div>';
       
+      //Agrego el nuevo input al DOM
       $(event.target).parent().find("#containerRespuestas").append(newRowInput);
 
-            //Le asigno el evento de borrado
+            //Le asigno el evento de autoborrado
             $("#containerRespuestas").find("img").click(function() {
               $(this).parent().remove()
             });
