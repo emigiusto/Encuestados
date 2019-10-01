@@ -25,5 +25,9 @@ Controlador.prototype = {
 
   llenarModal:function(idPregunta) {
     this.modelo.llenarModal(idPregunta);
+  },
+
+  precargarLocal:function(){
+    this.modelo.precargarLocal();
   }
 };

@@ -22,6 +22,7 @@ VistaAdministrador.prototype = {
   //lista
   inicializar: function() {
     //llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
+    this.precargarLocal();
     this.reconstruirLista();
     this.configuracionDeBotones();
     validacionDeFormulario();
@@ -51,7 +52,7 @@ VistaAdministrador.prototype = {
     var lista = this.elementos.lista;
     lista.html('');
 
-    var preguntas = this.modelo.preguntas;
+    var preguntas = modelo.preguntas;
     for (var i=0;i<preguntas.length;++i){
       lista.append(this.construirElementoPregunta(preguntas[i]));
     }
@@ -99,20 +100,17 @@ VistaAdministrador.prototype = {
     e.confirmarEdit.click(function() {
       //respuestasNuevas es un array que contiene las nuevas respuestas
       var idPregunta = parseInt($('.list-group-item.active').attr('id'));
-      console.log("idPregunta es " + idPregunta)
       var nuevoTexto = $('#pregunta-text').val();
-      console.log("nuevoTexto es " + nuevoTexto);
       var respuestasNuevas = [];
-      console.log("respuestasNuevas es " + respuestasNuevas);
 
-        var cantidadDeRespuestas = $("#containerRespuestas div").length;
-        console.log("cantidadDeRespuestas es " + cantidadDeRespuestas);
+        var idRespuestaMaximo = $("#containerRespuestas div").length+10; //SOLUCIONAR! Me aseguro que no va a haber un id de el largo del array +10
         //Ciclo que llena las respuestas en el array
-        for (let index = 0; index < cantidadDeRespuestas; index++) {
+        for (let index = 0; index < idRespuestaMaximo; index++) {
          var respuestaAPushear = $("input[idrespuesta='"+index + "']").val();
-         respuestasNuevas.push(respuestaAPushear);
+            if (respuestaAPushear!==undefined) {
+                respuestasNuevas.push(respuestaAPushear);
+            }
         };
-        console.log("cantidadDeRespuestas es " + cantidadDeRespuestas);
 
       contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
       $('#editModal').modal('hide');
@@ -140,4 +138,8 @@ VistaAdministrador.prototype = {
   limpiarFormulario: function(){
     $('.form-group.answer.has-feedback.has-success').remove();
   },
+
+  precargarLocal:function(){
+    this.controlador.precargarLocal();
+  }
 };

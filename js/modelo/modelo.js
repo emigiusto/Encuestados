@@ -36,11 +36,13 @@ Modelo.prototype = {
 
   borrarPregunta: function(idPregunta) {
     this.preguntas = _.filter(this.preguntas, function(preg) { return !(preg.id==idPregunta); });
+    this.guardar();
     this.preguntaEliminada.notificar();
   },
 
   borrarPreguntasAll: function() {
     this.preguntas = [];
+    this.guardar();
     this.preguntaEliminada.notificar();
   },
 
@@ -51,6 +53,7 @@ Modelo.prototype = {
     var respuestaParaSumar = this.buscarPreguntaPorId(preguntaParaSumar,respuestaTexto);
     //Le sumo a la cantidad de la respuesta +1
     respuestaParaSumar.cantidad +=1;
+    this.guardar();
   },
 
 
@@ -77,6 +80,7 @@ Modelo.prototype = {
       preguntaEditar.cantidadPorRespuesta = RespuestasAnterioresFiltradas;
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
+    this.guardar();
     this.preguntaAgregada.notificar();
   },
 
@@ -96,6 +100,7 @@ Modelo.prototype = {
     cuadroDePregunta.setAttribute("idPregunta", idPregunta);
     var respuestashtml = "";
     
+    
     //Este ciclo recorrerá las respuestas creando el html correspondiente
     for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
       var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
@@ -106,13 +111,18 @@ Modelo.prototype = {
 
           //Asigno eventos a botones de autoborrado
           $("#containerRespuestas").find("img").click(function() {
-            $(this).parent().remove()
+            $(this).parent().remove();
           });
   },
 
 
   //se guardan las preguntas
   guardar: function(){
+    localStorage.setItem('preguntas',JSON.stringify(this.preguntas));
+  },
+
+  precargarLocal:function(){
+      this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
   },
 
   //Otras funciones adicionales
