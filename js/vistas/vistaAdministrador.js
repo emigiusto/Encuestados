@@ -119,7 +119,6 @@ VistaAdministrador.prototype = {
     //Agregar pregunta en MODAL
     e.agregarRespModalButton.click(function(event) {
       var idPregunta = $(event.target).parent().find("#pregunta-text").attr("idpregunta");
-      console.log(idPregunta)
       var idRespuesta= $(event.target).parent().find("#containerRespuestas").children().length;
       
       //Preparo la linea de DIV + INPUT

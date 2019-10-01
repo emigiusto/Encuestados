@@ -122,7 +122,9 @@ Modelo.prototype = {
   },
 
   precargarLocal:function(){
-      this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
+      if (localStorage.getItem('preguntas')!==null){
+        this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
+      }
   },
 
   //Otras funciones adicionales
