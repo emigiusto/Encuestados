@@ -74,9 +74,7 @@ Modelo.prototype = {
           RespuestasAnterioresFiltradas.push({textoRespuesta: respNew, cantidad: 0});
         }
       }
-
       preguntaEditar.cantidadPorRespuesta = RespuestasAnterioresFiltradas;
-
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
     this.preguntaAgregada.notificar();
@@ -89,14 +87,17 @@ Modelo.prototype = {
     $('#containerRespuestas').empty();
     //Esta es la pregunta según el ID seleccionado como "active"
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
+
     //Este es el texto de la pregunta. Lo ingreso en el modal:
     var cuadroDePregunta = document.getElementById("pregunta-text");
+
     //Seteo por default el "value" del input del modal
     cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
     cuadroDePregunta.setAttribute("idPregunta", idPregunta);
     var respuestashtml = "";
+    
     //Este ciclo recorrerá las respuestas creando el html correspondiente
-    for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length-1; index++) {
+    for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
       var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
       respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index,idPregunta);
     }

@@ -99,15 +99,21 @@ VistaAdministrador.prototype = {
     e.confirmarEdit.click(function() {
       //respuestasNuevas es un array que contiene las nuevas respuestas
       var idPregunta = parseInt($('.list-group-item.active').attr('id'));
+      console.log("idPregunta es " + idPregunta)
       var nuevoTexto = $('#pregunta-text').val();
+      console.log("nuevoTexto es " + nuevoTexto);
       var respuestasNuevas = [];
+      console.log("respuestasNuevas es " + respuestasNuevas);
 
-        var cantidadDeRespuestas = $("#containerRespuestas input").length;
+        var cantidadDeRespuestas = $("#containerRespuestas div").length;
+        console.log("cantidadDeRespuestas es " + cantidadDeRespuestas);
         //Ciclo que llena las respuestas en el array
         for (let index = 0; index < cantidadDeRespuestas; index++) {
-         var respuestaAPushear = $('#responseNumber'+index).val();
+         var respuestaAPushear = $("input[idrespuesta='"+index + "']").val();
          respuestasNuevas.push(respuestaAPushear);
         };
+        console.log("cantidadDeRespuestas es " + cantidadDeRespuestas);
+
       contexto.controlador.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
       $('#editModal').modal('hide');
     });
