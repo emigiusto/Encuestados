@@ -79,7 +79,7 @@ VistaAdministrador.prototype = {
       contexto.controlador.borrarTodasLasPreguntas();
     });
 
-    //Cargo el modal al apretar EDITAR
+    //Cargo el MODAL
     e.botonEditarPregunta.click(function() {
       //id pregunta a editar
       var id = parseInt($('.list-group-item.active').attr('id')) || 0;

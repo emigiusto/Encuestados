@@ -11,7 +11,7 @@ Controlador.prototype = {
   },
 
   borrarPregunta: function(idPregunta) {
-        this.modelo.borrarPregunta(idPregunta);
+    if (idPregunta > 0) this.modelo.borrarPregunta(idPregunta);
   },
 
   borrarTodasLasPreguntas: function() {

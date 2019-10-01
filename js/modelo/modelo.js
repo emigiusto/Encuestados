@@ -7,6 +7,7 @@ var Modelo = function() {
 
   //inicializacion de eventos
   this.preguntaCambiada = new Evento(this);
+  this.respuestaVotada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -58,7 +59,7 @@ Modelo.prototype = {
 
   editarPregunta: function(idPregunta,nuevoTexto,respuestasNuevas){
     var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
-    //Actualizo el titulo de la Pregunta
+    //CAMBIO EL TITULO DE LA PREGUNTA
     preguntaEditar.textoPregunta = nuevoTexto;
 
     //Filtro el array viejo a travez de respuestasNuevas
@@ -76,6 +77,7 @@ Modelo.prototype = {
           RespuestasAnterioresFiltradas.push({textoRespuesta: respNew, cantidad: 0});
         }
       }
+      //CAMBIO LAS RESPUESTAS
       preguntaEditar.cantidadPorRespuesta = RespuestasAnterioresFiltradas;
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
@@ -83,7 +85,7 @@ Modelo.prototype = {
     this.preguntaCambiada.notificar();
   },
 
-
+//ESTA FUNCIÓN DEBE IR EN LA VISTA?
   //Esta función llena el modal de editarPregunta por "default"
   llenarModal: function(idPregunta){
     //Limpio las respuestas existentes
@@ -115,6 +117,7 @@ Modelo.prototype = {
   },
 
 
+//LOCAL STORAGE
   //se guardan las preguntas
   guardar: function(){
     localStorage.setItem('preguntas',JSON.stringify(this.preguntas));
