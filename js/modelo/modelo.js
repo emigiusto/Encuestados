@@ -54,6 +54,7 @@ Modelo.prototype = {
     //Le sumo a la cantidad de la respuesta +1
     respuestaParaSumar.cantidad +=1;
     this.guardar();
+    this.respuestaVotada.notificar();
   },
 
 

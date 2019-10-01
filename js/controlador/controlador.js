@@ -29,5 +29,8 @@ Controlador.prototype = {
 
   precargarLocal:function(){
     this.modelo.precargarLocal();
+  },
+  agregarVotos:function(nombrePregunta,respuestaSeleccionada){
+    this.modelo.sumarVoto(nombrePregunta,respuestaSeleccionada);
   }
 };
