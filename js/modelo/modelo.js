@@ -6,8 +6,7 @@ var Modelo = function() {
   this.ultimoId = 0;
 
   //inicializacion de eventos
-  this.preguntaAgregada = new Evento(this);
-  this.preguntaEliminada = new Evento(this);
+  this.preguntaCambiada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -31,19 +30,19 @@ Modelo.prototype = {
     var nuevaPregunta = {'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas};
     this.preguntas.push(nuevaPregunta);
     this.guardar();
-    this.preguntaAgregada.notificar();
+    this.preguntaCambiada.notificar();
   },
 
   borrarPregunta: function(idPregunta) {
     this.preguntas = _.filter(this.preguntas, function(preg) { return !(preg.id==idPregunta); });
     this.guardar();
-    this.preguntaEliminada.notificar();
+    this.preguntaCambiada.notificar();
   },
 
   borrarPreguntasAll: function() {
     this.preguntas = [];
     this.guardar();
-    this.preguntaEliminada.notificar();
+    this.preguntaCambiada.notificar();
   },
 
   sumarVoto: function(idPregunta,respuestaTexto) {
@@ -81,7 +80,7 @@ Modelo.prototype = {
     //Cambio las respuestas. respuestas es un array de esta forma:
     // [{textoRespuesta: "asd", cantidad: 0},{textoRespuesta: "qwe", cantidad: 2}]
     this.guardar();
-    this.preguntaAgregada.notificar();
+    this.preguntaCambiada.notificar();
   },
 
 

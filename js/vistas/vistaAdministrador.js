@@ -8,15 +8,10 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   var contexto = this;
 
   // suscripción de observadores
-  this.modelo.preguntaAgregada.suscribir(function() {
+  this.modelo.preguntaCambiada.suscribir(function() {
     contexto.reconstruirLista();
   });
-
-  this.modelo.preguntaEliminada.suscribir(function() { 
-    contexto.reconstruirLista(); 
-  });
-};
-
+}
 
 VistaAdministrador.prototype = {
   //lista
