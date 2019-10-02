@@ -19,7 +19,7 @@ Controlador.prototype = {
   },
 
   editarPregunta:function(idPregunta,nuevoTexto,respuestasNuevas) {
-    //respuestasNuevas es un array que contiene las nuevas respuestas
+    //respuestasNuevas es un array de strings que contiene las nuevas respuestas
     this.modelo.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
   },
 
@@ -30,6 +30,7 @@ Controlador.prototype = {
   precargarLocal:function(){
     this.modelo.precargarLocal();
   },
+
   agregarVotos:function(nombrePregunta,respuestaSeleccionada){
     this.modelo.sumarVoto(nombrePregunta,respuestaSeleccionada);
   }
