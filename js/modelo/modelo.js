@@ -50,7 +50,7 @@ Modelo.prototype = {
     //Busco la pregunta en la que esta la respuesta elegida
     var preguntaParaSumar = this.buscarPreguntaPorId(idPregunta);
     //Busco la respuesta elegida dentro de la pregunta
-    var respuestaParaSumar = this.buscarPreguntaPorId(preguntaParaSumar,respuestaTexto);
+    var respuestaParaSumar = this.buscarRespuestaPorTexto(preguntaParaSumar,respuestaTexto);
     //Le sumo a la cantidad de la respuesta +1
     respuestaParaSumar.cantidad +=1;
     this.guardar();
@@ -137,7 +137,7 @@ Modelo.prototype = {
             return pregunta.id == idPregunta;
             });
   },
-  //Devuelve la respuesta de una determinada pregunta que sea igual al texto pasado por param
+  //Devuelve la respuesta {texto:xxx ,cantidad:xxx} de una determinada pregunta que sea igual al texto pasado por param
   buscarRespuestaPorTexto: function(pregunta,respuestaTexto){
     return pregunta.cantidadPorRespuesta.find(function(respuesta) {
             return respuesta.textoRespuesta == respuestaTexto;
