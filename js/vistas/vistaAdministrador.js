@@ -86,7 +86,7 @@ VistaAdministrador.prototype = {
           if (id==0) {
             return false;
           }
-      contexto.controlador.llenarModal(id);
+      contexto.llenarModal(id);
       $('#editModal').modal('show');
     });
 
@@ -98,7 +98,8 @@ VistaAdministrador.prototype = {
       var nuevoTexto = $('#pregunta-text').val();
       var respuestasNuevas = [];
 
-        var idRespuestaMaximo = $("#containerRespuestas div").length+10; //SOLUCIONAR! Me aseguro que no va a haber un id de el largo del array +10
+//*********** SOLUCIONAR! Me aseguro que no va a haber un id de el largo del array +15
+        var idRespuestaMaximo = $("#containerRespuestas div").length + 15; 
         //Ciclo que llena las respuestas en el array
         for (let index = 0; index < idRespuestaMaximo; index++) {
          var respuestaAPushear = $("input[idrespuesta='"+index + "']").val();
@@ -122,11 +123,40 @@ VistaAdministrador.prototype = {
       //Agrego el nuevo input al DOM
       $(event.target).parent().find("#containerRespuestas").append(newRowInput);
 
-            //Le asigno el evento de autoborrado
-            $("#containerRespuestas").find("img").click(function() {
-              $(this).parent().remove()
-            });
+      //Asigno eventos a botones de autoborrado al modal de Edit
+        contexto.asignarEventoAutoborradoRespModal();
     });
+  },
+  //FIN DE CONFIGURAR BOTONES
+
+
+  //ESTA FUNCIÓN DEBE IR EN LA VISTA?
+  //Esta función llena el modal de editarPregunta por "default"
+  llenarModal: function(idPregunta){
+    //Limpio las respuestas existentes
+    $('#containerRespuestas').empty();
+    //Esta es la pregunta según el ID seleccionado como "active"
+    var preguntaEditar = this.modelo.buscarPreguntaPorId(idPregunta);
+
+    //Este es el texto de la pregunta. Lo ingreso en el modal:
+    var cuadroDePregunta = document.getElementById("pregunta-text");
+
+    //Seteo por default el "value" del input del modal
+    cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
+    cuadroDePregunta.setAttribute("idPregunta", idPregunta);
+
+    var respuestashtml = "";
+    //Este ciclo recorrerá las respuestas creando el codigo html correspondiente
+    for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
+      var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
+      respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index,idPregunta);
+    }
+    //Selecciono el contenedor de respuestas y le inserto el codigo html preparado en el ciclo
+    var containerResp = document.getElementById("containerRespuestas");
+    containerResp.innerHTML = respuestashtml;
+
+   //Asigno eventos a botones de autoborrado al modal de Edit
+    this.asignarEventoAutoborradoRespModal();
   },
 
   limpiarFormulario: function(){
@@ -135,5 +165,17 @@ VistaAdministrador.prototype = {
 
   precargarLocal:function(){
     this.controlador.precargarLocal();
+  },
+
+//Devuelve el texto html a agregar al modal segun la cantidad de respuestas que haya
+  prepararRespuestaModal: function(textoRespuesta,idRespuesta,idPregunta){
+    return '<div idPregunta="' + idPregunta + '"><input type="text" class="form-control" value="'+ textoRespuesta +'" idRespuesta ="' + idRespuesta +'" idPregunta="' + idPregunta + '"></input><img class="modalDelete" src="img/deleteButton.png" alt="No Image"></img></div>';
+  },
+
+  //Asigno eventos a botones de autoborrado al modal de Edit
+  asignarEventoAutoborradoRespModal: function(){
+    $("#containerRespuestas").find("img").click(function() {
+      $(this).parent().remove();
+    });
   }
 };

@@ -23,10 +23,6 @@ Controlador.prototype = {
     this.modelo.editarPregunta(idPregunta,nuevoTexto,respuestasNuevas);
   },
 
-  llenarModal:function(idPregunta) {
-    this.modelo.llenarModal(idPregunta);
-  },
-
   precargarLocal:function(){
     this.modelo.precargarLocal();
   },

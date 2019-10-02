@@ -86,36 +86,7 @@ Modelo.prototype = {
     this.preguntaCambiada.notificar();
   },
 
-//ESTA FUNCIÓN DEBE IR EN LA VISTA?
-  //Esta función llena el modal de editarPregunta por "default"
-  llenarModal: function(idPregunta){
-    //Limpio las respuestas existentes
-    $('#containerRespuestas').empty();
-    //Esta es la pregunta según el ID seleccionado como "active"
-    var preguntaEditar = this.buscarPreguntaPorId(idPregunta);
 
-    //Este es el texto de la pregunta. Lo ingreso en el modal:
-    var cuadroDePregunta = document.getElementById("pregunta-text");
-
-    //Seteo por default el "value" del input del modal
-    cuadroDePregunta.setAttribute("value", preguntaEditar.textoPregunta);
-    cuadroDePregunta.setAttribute("idPregunta", idPregunta);
-    var respuestashtml = "";
-    
-    
-    //Este ciclo recorrerá las respuestas creando el html correspondiente
-    for (let index = 0; index < preguntaEditar.cantidadPorRespuesta.length; index++) {
-      var respTexto = preguntaEditar.cantidadPorRespuesta[index].textoRespuesta;
-      respuestashtml = respuestashtml + this.prepararRespuestaModal(respTexto,index,idPregunta);
-    }
-    var containerResp = document.getElementById("containerRespuestas");
-    containerResp.innerHTML = respuestashtml;
-
-          //Asigno eventos a botones de autoborrado
-          $("#containerRespuestas").find("img").click(function() {
-            $(this).parent().remove();
-          });
-  },
 
 
 //LOCAL STORAGE
@@ -144,10 +115,7 @@ Modelo.prototype = {
     });
   },
 
-    //Devuelve el texto html a agregar al modal segun la cantidad de respuestas que haya
-  prepararRespuestaModal: function(textoRespuesta,idRespuesta,idPregunta){
-    return '<div idPregunta="' + idPregunta + '"><input type="text" class="form-control" value="'+ textoRespuesta +'" idRespuesta ="' + idRespuesta +'" idPregunta="' + idPregunta + '"></input><img class="modalDelete" src="img/deleteButton.png" alt="No Image"></img></div>';
-id  }
+
 
 };
 
