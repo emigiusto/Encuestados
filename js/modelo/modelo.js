@@ -86,9 +86,6 @@ Modelo.prototype = {
     this.preguntaCambiada.notificar();
   },
 
-
-
-
 //LOCAL STORAGE
   //se guardan las preguntas
   guardar: function(){

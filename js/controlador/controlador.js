@@ -27,7 +27,7 @@ Controlador.prototype = {
     this.modelo.precargarLocal();
   },
 
-  agregarVotos:function(nombrePregunta,respuestaSeleccionada){
-    this.modelo.sumarVoto(nombrePregunta,respuestaSeleccionada);
+  agregarVotos:function(idPregunta,respuestaSeleccionada){
+    this.modelo.sumarVoto(idPregunta,respuestaSeleccionada);
   }
 };

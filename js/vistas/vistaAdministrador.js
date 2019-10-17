@@ -60,7 +60,7 @@ VistaAdministrador.prototype = {
     e.botonAgregarPregunta.click(function() {
       var value = e.pregunta.val();
       var respuestas = [];
-      $('[name="option[]"]').each(function() {
+      $('div:not(#optionTemplate)>input[name="option[]"]').each(function() {
         //completado?
         var respuesta = {'textoRespuesta': $(this).val(), 'cantidad': 0}
         respuestas.push(respuesta);
